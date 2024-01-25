@@ -55,7 +55,7 @@
     # '';
     ".config/polybar/config.ini".source = ./polybar.conf;
     ".config/kitty/kitty.conf".source = ./kitty.conf;
-    ".config/kitty/current-theme.conf".source = ./kitty-theme.conf
+    ".config/kitty/current-theme.conf".source = ./kitty-theme.conf;
   };
 
   # Home Manager can also manage your environment variables through
