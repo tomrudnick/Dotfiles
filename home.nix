@@ -88,6 +88,7 @@
       "scannet" = "sudo arp-scan --localnet";
       "s" = "kitten ssh";
       "open" = "xdg-open";
+      "sl" = "~/.dotfiles/scripts/slWild.sh";
     };
 
     zplug = {

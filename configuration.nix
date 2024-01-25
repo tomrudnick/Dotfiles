@@ -251,6 +251,8 @@ in
     arduino
     kicad
     zoom-us
+    sl
+    sox
   ];
 
   fonts.packages = with pkgs; [
