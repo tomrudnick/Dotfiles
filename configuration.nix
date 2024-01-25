@@ -203,6 +203,7 @@ in
     wget
     firefox
     kitty
+    sxiv #replacement for feh
     networkmanagerapplet
     picom
     nitrogen
@@ -219,7 +220,6 @@ in
     discord
     arandr
     evince
-    feh
     shared-mime-info
     lxmenu-data
     (python3.withPackages(ps: with ps; [ pandas requests dbus-python numpy ]))
