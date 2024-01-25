@@ -82,6 +82,7 @@
       "ls" = "eza -l --icons";
       "scannet" = "sudo arp-scan --localnet";
       "s" = "kitten ssh";
+      "open" = "xdg-open";
     };
 
     zplug = {
@@ -170,6 +171,7 @@
     };
   };
 
+  home.file.".config/polybar/config.ini".source = ./polybar.conf;
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 }
