@@ -53,6 +53,9 @@
     #   org.gradle.console=verbose
     #   org.gradle.daemon.idletimeout=3600000
     # '';
+    ".config/polybar/config.ini".source = ./polybar.conf;
+    ".config/kitty/kitty.conf".source = ./kitty.conf;
+    ".config/kitty/current-theme.conf".source = ./kitty-theme.conf
   };
 
   # Home Manager can also manage your environment variables through
@@ -100,12 +103,12 @@
       defaultApplications = {
         "inode/directory" = "pcmanfm.desktop";
         "application/pdf" = "org.gnome.Evince.desktop";
-	"x-scheme-handler/mailspring" = "Mailspring.desktop";
-	"text/html" = "google-chrome.desktop";
-	"x-scheme-handler/http" = "google-chrome.desktop";
- 	"x-scheme-handler/https" = "google-chrome.desktop";
-	"x-scheme-handler/about" = "google-chrome.desktop";
-	"x-scheme-handler/unknown" = "google-chrome.desktop";
+        "x-scheme-handler/mailspring" = "Mailspring.desktop";
+        "text/html" = "google-chrome.desktop";
+        "x-scheme-handler/http" = "google-chrome.desktop";
+        "x-scheme-handler/https" = "google-chrome.desktop";
+        "x-scheme-handler/about" = "google-chrome.desktop";
+        "x-scheme-handler/unknown" = "google-chrome.desktop";
       };
     };
   };
@@ -171,7 +174,6 @@
     };
   };
 
-  home.file.".config/polybar/config.ini".source = ./polybar.conf;
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 }
