@@ -2,7 +2,7 @@
 # Start sl in the background
 SCRIPT_DIR="$(dirname "$0")"
 
-sl &
+sl | lolcat &
 SL_PID=$!
 
 # Start your second command in the background

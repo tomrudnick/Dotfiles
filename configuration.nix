@@ -253,6 +253,7 @@ in
     zoom-us
     sl
     sox
+    lolcat
   ];
 
   fonts.packages = with pkgs; [
