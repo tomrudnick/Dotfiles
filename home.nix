@@ -74,6 +74,7 @@
   home.sessionVariables = {
     # EDITOR = "emacs";
     SSH_ASKPASS = "";  #this prevents from starting the x11-ssh-askpass (who the fuck would want that anyway)
+    _JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=lcd"; #Better font rendering for java applications
   };
 
   programs.zsh = {

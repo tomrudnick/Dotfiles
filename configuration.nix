@@ -84,6 +84,9 @@ in
     enable = true;
   };
 
+  programs.java = {
+    enable = true;
+  };  
 
   services = {
     dbus.enable = true;
@@ -101,7 +104,7 @@ in
     };
   };
   
-
+  
   security.polkit.enable = true;  
 
   systemd = {
@@ -197,6 +200,7 @@ in
     cmake
     zip
     unzip
+    usbutils
     killall
     tree
     go
@@ -250,10 +254,13 @@ in
     arp-scan
     arduino
     kicad
+    prusa-slicer
     zoom-us
     sl
     sox
     lolcat
+    gpu-screen-recorder-gtk
+    vlc
   ];
 
   fonts.packages = with pkgs; [
@@ -274,6 +281,10 @@ in
    modesetting.enable = true;
    nvidiaSettings = true;
    package = config.boot.kernelPackages.nvidiaPackages.stable;
+  };
+
+  virtualisation.vmware.host = {
+    enable = true;
   };
 
   # Some programs need SUID wrappers, can be configured further or are
