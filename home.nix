@@ -40,6 +40,34 @@
     # '')
   ];
 
+  systemd.user.services.gpu-screen-recorder = {
+    Unit = {
+      Description = "GPU Screen Recorder Service";
+    };
+    Install = {
+      WantedBy = [ "default.target" ];
+    };
+    Service = {
+      ExecStart = let
+        window = "focused";
+        container = "mp4";
+        quality = "very_high";
+        codec = "auto";
+        audioCodec = "opus";
+        framerate = "60";
+        replayDuration = "120";
+        outputDir = "%h/Videos";
+        makeFolders = "no";
+        screenSize = "1920x1080";
+        audioSource = "$(pactl get-default-sink).monitor|$(pactl get-default-source)";
+        command = "gpu-screen-recorder -w ${window} -s ${screenSize} -f ${framerate} -o ${outputDir} -r ${replayDuration} -c ${container} -a \"${audioSource}\"";
+      in "${pkgs.bash}/bin/bash -c '${command}'";
+      KillSignal = "SIGINT";
+      Restart = "on-failure";
+      RestartSec = 5;
+    };
+  };
+
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {

@@ -260,6 +260,7 @@ in
     sox
     lolcat
     gpu-screen-recorder-gtk
+    gpu-screen-recorder
     vlc
   ];
 
