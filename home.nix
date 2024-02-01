@@ -111,7 +111,7 @@
     shellAliases = {
       ll = "ls -l";
       ".." = "cd ..";
-      "nrs" = "sudo nixos-rebuild switch --flake /home/tom/.dotfiles/";
+      "nrs" = "sudo nixos-rebuild switch --flake /home/tom/.dotfiles/ && dmenu_extended_cache_build";
       "hrs" = "home-manager switch --flake /home/tom/.dotfiles/";
       "cat" = "bat";
       "ls" = "eza -l --icons";

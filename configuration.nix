@@ -262,6 +262,8 @@ in
     gpu-screen-recorder-gtk
     gpu-screen-recorder
     vlc
+    gimp
+    mate.engrampa
   ];
 
   fonts.packages = with pkgs; [
