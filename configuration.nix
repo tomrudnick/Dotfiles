@@ -126,6 +126,7 @@ in
       serviceConfig = {
         Type = "oneshot";
         ExecStart = "${dmenuExtended}/bin/dmenu_extended_cache_build"; 
+        Environment = "PATH=/run/current-system/sw/bin";
       };
       wantedBy = [ "multi-user.target" ];
     };
