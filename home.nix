@@ -142,6 +142,10 @@
         "x-scheme-handler/https" = "google-chrome.desktop";
         "x-scheme-handler/about" = "google-chrome.desktop";
         "x-scheme-handler/unknown" = "google-chrome.desktop";
+        "image/jpeg" = "sxiv.desktop";
+        "image/png" = "sxiv.desktop";
+        "image/gif" = "sxiv.desktop";
+        "image/bmp" = "sxiv.desktop";
       };
     };
   };
