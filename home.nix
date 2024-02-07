@@ -87,6 +87,7 @@
     ".config/dmenu-extended/config/dmenuExtended_preferences.txt".source = ./dmenuExtended.conf;
     ".config/i3/config/".source = ./i3.conf;
     ".config/onedrive/config".source = ./onedrive.conf;
+    ".config/picom.conf".source = ./picom.conf;
   };
 
   # Home Manager can also manage your environment variables through

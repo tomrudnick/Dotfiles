@@ -12,6 +12,7 @@
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
+  boot.kernelParams = [ "nvme_core.default_ps_max_latency_us=0" ];
 
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/36de3323-9cf2-4d9d-96ea-c60a657cfb31";
