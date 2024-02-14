@@ -7,8 +7,9 @@ let
   dmenuExtended = (import ./pkgs/dmenu_extended.nix { inherit (pkgs) lib python3Packages; });
 in
 {
+
   imports =
-    [ # Include the results of the hardware scan.
+    [
       ./hardware-configuration.nix
     ];
   
@@ -18,7 +19,7 @@ in
   boot.loader.systemd-boot.enable = false;
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "nodev";
-  boot.loader.grub.useOSProber = true;
+  boot.loader.grub.useOSProber = true; #finds other system like linux or windows while booting
   boot.loader.grub.efiSupport = true;
   boot.loader.efi.canTouchEfiVariables = true;
   networking.hostName = "nixos"; # Define your hostname.
@@ -61,8 +62,8 @@ in
       xterm.enable = false;
     };
 
-    displayManager.defaultSession = "none+i3";
-    
+    displayManager.defaultSession = "none+i3"; #default is lightdm
+
     windowManager.i3 = {
       enable = true;
       package = pkgs.i3-gaps;
@@ -104,6 +105,7 @@ in
     };
   };
   
+  programs.dconf.enable = true; #store settings from gtk3 applications like size of file selection dialogs
   
   security.polkit.enable = true;  
 
@@ -183,7 +185,7 @@ in
     (self: super: {
       mailspring = super.mailspring.overrideAttrs (oldAttrs: {
         postInstall = ''
-          wrapProgram $out/bin/mailspring --add-flags "--password-store=gnome-libsecret"
+          wrapProgram $out/bin/mailspring --add-flags "--password-store=gnome-libsecret" #otherwise passwords can't be stored
         '';
       });
       polybar = super.polybar.override {
@@ -264,7 +266,7 @@ in
     gpu-screen-recorder
     vlc
     gimp
-    mate.engrampa
+    mate.engrampa #compressed file viewer (good integration with pcmanfm)
   ];
 
   fonts.packages = with pkgs; [
