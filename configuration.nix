@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, pkgs-unstable, ... }:
 let
   dmenuExtended = (import ./pkgs/dmenu_extended.nix { inherit (pkgs) lib python3Packages; });
 in
@@ -145,6 +145,13 @@ in
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
+  services.printing.drivers = [ pkgs.gutenprint pkgs.gutenprintBin pkgs.epson-escpr ];
+
+  services.avahi = {
+    enable = true;
+    nssmdns = true;
+    openFirewall = true;
+  };
 
   # Enable sound with pipewire.
   sound.enable = true;
@@ -194,6 +201,8 @@ in
       };
     })
   ];
+  
+  nixpkgs.config.chromium.enableWideVine = true; 
   
   environment.systemPackages = with pkgs; [
     gnumake
@@ -267,6 +276,10 @@ in
     vlc
     gimp
     mate.engrampa #compressed file viewer (good integration with pcmanfm)
+    chromium
+    filezilla
+    rpi-imager
+    pkgs-unstable.localsend #unstable localsend is required to work with the iOS App
   ];
 
   fonts.packages = with pkgs; [
@@ -279,6 +292,9 @@ in
     enable = true;
     driSupport = true;
     driSupport32Bit = true;
+    #extraPackages = with pkgs; [
+    #  vaapiVdpau #enables video acceleration
+    #];
   };
 
   services.xserver.videoDrivers = ["nvidia"];
@@ -292,6 +308,20 @@ in
   virtualisation.vmware.host = {
     enable = true;
   };
+
+
+  networking = {
+    firewall = {
+      enable = true;
+      allowedTCPPorts = [ 80 443 53317 ];
+      allowedUDPPortRanges = [
+        { from = 4000; to = 4007; }
+        { from = 53315; to = 53318; }
+        { from = 8000; to = 8010; }
+      ];
+    };
+  };
+      
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
