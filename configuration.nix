@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, pkgs-unstable, ... }:
+{ config, pkgs, ... }:
 let
   dmenuExtended = (import ./pkgs/dmenu_extended.nix { inherit (pkgs) lib python3Packages; });
 in
@@ -182,7 +182,7 @@ in
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
-  # mailspring has a security breach at the moment
+  
   nixpkgs.config.permittedInsecurePackages = [
     "mailspring-1.12.0"
   ];
@@ -190,18 +190,13 @@ in
   # a few customizations for nixpkgs
   nixpkgs.overlays = [
     (self: super: {
-      mailspring = super.mailspring.overrideAttrs (oldAttrs: {
-        postInstall = ''
-          wrapProgram $out/bin/mailspring --add-flags "--password-store=gnome-libsecret" #otherwise passwords can't be stored
-        '';
-      });
       polybar = super.polybar.override {
         i3Support = true;
         pulseSupport = true;
       };
     })
   ];
-  
+
   nixpkgs.config.chromium.enableWideVine = true; 
   
   environment.systemPackages = with pkgs; [
@@ -224,7 +219,6 @@ in
     picom
     nitrogen
     google-chrome
-    mailspring
     _1password-gui
     polkit_gnome
     pcmanfm
@@ -257,7 +251,6 @@ in
     fzf
     neofetch
     ranger
-    geogebra
     (import ./pkgs/dmenu_extended.nix { inherit (pkgs) lib python3Packages; })
     flameshot #best screenshot tool
     teamspeak_client
@@ -279,8 +272,17 @@ in
     chromium
     filezilla
     rpi-imager
-    pkgs-unstable.localsend #unstable localsend is required to work with the iOS App
-  ];
+    sage
+    #mailspring
+  ] ++
+  
+  #all unstable packages are in an another list
+  (with pkgs; [
+    unstable.localsend #unstable localsend is required to work with the iOS App
+    unstable.geogebra #unstable geogebra, because stable URL is broken
+    #unstable.geogebra6 #same
+    unstable.mailspring #because mailspring in 23.11 has a security breach
+  ]);
 
   fonts.packages = with pkgs; [
     nerdfonts
@@ -309,7 +311,7 @@ in
     enable = true;
   };
 
-
+  #this is neccessary cause of localsend
   networking = {
     firewall = {
       enable = true;
@@ -321,33 +323,7 @@ in
       ];
     };
   };
-      
-
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
-
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
-
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "23.11"; # Did you read the comment?
+    
+  system.stateVersion = "23.11"; # Don't change
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 }

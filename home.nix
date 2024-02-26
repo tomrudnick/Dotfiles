@@ -120,6 +120,7 @@
       "s" = "kitten ssh";
       "open" = "xdg-open";
       "sl" = "~/.dotfiles/scripts/slWild.sh";
+      "weather" = "curl wttr.in/Munich";
     };
 
     zplug = {
