@@ -97,7 +97,7 @@
   # either
   #
   #  ~/.nix-profile/etc/profile.d/hm-session-vars.sh
-  #
+x  #
   # or
   #
   #  /etc/profiles/per-user/tom/etc/profile.d/hm-session-vars.sh

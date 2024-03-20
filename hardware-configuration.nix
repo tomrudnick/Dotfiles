@@ -14,6 +14,8 @@
   boot.extraModulePackages = [ ];
   boot.kernelParams = [ "nvme_core.default_ps_max_latency_us=0" ];
 
+  hardware.nvidia.modesetting.enable = true;
+
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/36de3323-9cf2-4d9d-96ea-c60a657cfb31";
       fsType = "ext4";

@@ -55,8 +55,10 @@ in
   # Configure keymap in X11
   services.xserver = {
     enable = true;
-    layout = "de";
-    xkbVariant = "";
+    xkb = {
+      layout = "de";
+      variant = "";
+    };
     dpi = 120;
     desktopManager = {
       xterm.enable = false;
@@ -149,13 +151,13 @@ in
 
   services.avahi = {
     enable = true;
-    nssmdns = true;
+    nssmdns4 = true;
     openFirewall = true;
   };
 
   # Enable sound with pipewire.
-  sound.enable = true;
-  #hardware.pulseaudio.enable = false;
+  #sound.enable = true;
+  hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -163,12 +165,13 @@ in
     alsa.support32Bit = true;
     pulse.enable = true;
     # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
+    jack.enable = true;
 
     # use the example session manager (no others are packaged yet so this is enabled by default,
     # no need to redefine it in your config for now)
     #media-session.enable = true;
   };
+
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
@@ -177,7 +180,7 @@ in
   users.users.tom = {
     isNormalUser = true;
     description = "Tom Rudnick";
-    extraGroups = [ "networkmanager" "wheel" "dialout" ];
+    extraGroups = [ "networkmanager" "wheel" "dialout" "audio" ];
   };
 
   # Allow unfree packages
@@ -194,6 +197,13 @@ in
         i3Support = true;
         pulseSupport = true;
       };
+    })
+    (self: super: {
+      mailspring = super.mailspring.overrideAttrs (oldAttrs: {
+        postInstall = ''
+          wrapProgram $out/bin/mailspring --add-flags "--password-store=gnome-libsecret" #otherwise passwords can't be stored
+        '';
+      });
     })
   ];
 
@@ -232,7 +242,7 @@ in
     evince
     shared-mime-info
     lxmenu-data
-    (python3.withPackages(ps: with ps; [ pandas requests dbus-python numpy ]))
+    (python3.withPackages(ps: with ps; [ pandas requests dbus-python numpy pip ]))
     jetbrains.idea-ultimate
     jetbrains.rust-rover
     texliveFull
@@ -273,17 +283,18 @@ in
     filezilla
     rpi-imager
     sage
-    #mailspring
-  ] ++
+    qjackctl
+    ffmpeg
+    yt-dlp
+    audacity
+    mailspring
+    localsend
+    geogebra6
+    gurk-rs
+    qpwgraph
+    manim
+  ];
   
-  #all unstable packages are in an another list
-  (with pkgs; [
-    unstable.localsend #unstable localsend is required to work with the iOS App
-    unstable.geogebra #unstable geogebra, because stable URL is broken
-    #unstable.geogebra6 #same
-    unstable.mailspring #because mailspring in 23.11 has a security breach
-  ]);
-
   fonts.packages = with pkgs; [
     nerdfonts
     font-awesome
