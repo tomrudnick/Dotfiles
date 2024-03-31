@@ -159,6 +159,7 @@ let browser = "chromium-browser.desktop"; in
   programs.git = {
     enable = true;
     userName = "Tom Rudnick";
+    userEmail = "tom@rudnick.ch";
     extraConfig = {
       credential.helper = "${
           pkgs.git.override { withLibsecret = true; }
