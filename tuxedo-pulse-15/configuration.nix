@@ -11,6 +11,7 @@
     [
       ./hardware-configuration.nix
       ../default.nix
+      ../modules/cleanup.nix
     ];
 
   networking.hostName = "nixos-tux-tom"; # Define your hostname.
