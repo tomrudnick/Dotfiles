@@ -8,11 +8,6 @@ let
 in
 {
 
-  imports =
-    [
-      ./hardware-configuration.nix
-    ];
-  
   boot.supportedFilesystems = [ "ntfs" ];
  
   # Bootloader.
@@ -22,8 +17,6 @@ in
   boot.loader.grub.useOSProber = true; #finds other system like linux or windows while booting
   boot.loader.grub.efiSupport = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  networking.hostName = "nixos"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   environment.shells = with pkgs; [ zsh bash ];
   users.defaultUserShell = pkgs.zsh;
@@ -289,7 +282,8 @@ in
     audacity
     mailspring
     localsend
-    geogebra6
+    #geogebra6
+    geogebra
     gurk-rs
     qpwgraph
     manim
@@ -310,14 +304,7 @@ in
     #];
   };
 
-  services.xserver.videoDrivers = ["nvidia"];
   
-  hardware.nvidia = {
-   modesetting.enable = true;
-   nvidiaSettings = true;
-   package = config.boot.kernelPackages.nvidiaPackages.stable;
-  };
-
   virtualisation.vmware.host = {
     enable = true;
   };

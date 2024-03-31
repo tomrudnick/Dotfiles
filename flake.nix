@@ -18,10 +18,20 @@
             nixos = lib.nixosSystem {
                 inherit system;
                 modules = [
-                    ./configuration.nix 
+                    ./desktop-pc/configuration.nix
                 ];
             };
         };
+
+        nixosConfigurations = {           
+            nixos-tux-tom = lib.nixosSystem {
+                inherit system;
+                modules = [
+                    ./tuxedo-pulse-15/configuration.nix
+                ];
+            };
+        };
+
         homeConfigurations = {
             tom = home-manager.lib.homeManagerConfiguration {
                 inherit pkgs;

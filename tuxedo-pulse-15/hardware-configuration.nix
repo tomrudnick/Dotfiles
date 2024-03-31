@@ -8,33 +8,24 @@
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" ];
+  boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usb_storage" "sd_mod" "rtsx_usb_sdmmc" ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" ];
+  boot.kernelModules = [ "kvm-amd" "amdgpu" ];
   boot.extraModulePackages = [ ];
-  boot.kernelParams = [ "nvme_core.default_ps_max_latency_us=0" ];
-
-  hardware.nvidia.modesetting.enable = true;
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/36de3323-9cf2-4d9d-96ea-c60a657cfb31";
+    { device = "/dev/disk/by-uuid/42df04e7-0345-4905-8848-dc9d5b8255c5";
       fsType = "ext4";
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/C524-89B2";
+    { device = "/dev/disk/by-uuid/B8F5-FDC1";
       fsType = "vfat";
     };
-  
-  fileSystems."/mnt/Gaming" = 
-    { device = "/dev/disk/by-label/LinuxGaming";
-      fsType = "ext4";
-    };
 
-  swapDevices = [ {
-      device = "/var/lib/swapfile";
-      size = 8 * 1024;
-    } ];
+  swapDevices =
+    [ { device = "/dev/disk/by-uuid/2bb61bb1-014b-4e68-8068-b5fb8f22ec16"; }
+    ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
@@ -42,8 +33,14 @@
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
   networking.useDHCP = lib.mkDefault true;
   # networking.interfaces.eno1.useDHCP = lib.mkDefault true;
-  # networking.interfaces.wlp0s20f0u7.useDHCP = lib.mkDefault true;
+  # networking.interfaces.wlp1s0.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.tuxedo-rs = {
+    enable = true;
+    tailor-gui.enable = true;
+  };
+  hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = true;
 }

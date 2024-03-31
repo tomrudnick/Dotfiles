@@ -1,5 +1,6 @@
 { config, pkgs, ... }:
 
+let browser = "chromium-browser.desktop"; in
 {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
@@ -121,7 +122,8 @@
       "s" = "kitten ssh";
       "open" = "xdg-open";
       "sl" = "~/.dotfiles/scripts/slWild.sh";
-      "weather" = "curl wttr.in/Munich";
+      "weatherm" = "curl wttr.in/Munich";
+      "weathera" = "curl wttr.in/Aurich";
     };
 
     zplug = {
@@ -140,11 +142,11 @@
         "inode/directory" = "pcmanfm.desktop";
         "application/pdf" = "org.gnome.Evince.desktop";
         "x-scheme-handler/mailspring" = "Mailspring.desktop";
-        "text/html" = "google-chrome.desktop";
-        "x-scheme-handler/http" = "google-chrome.desktop";
-        "x-scheme-handler/https" = "google-chrome.desktop";
-        "x-scheme-handler/about" = "google-chrome.desktop";
-        "x-scheme-handler/unknown" = "google-chrome.desktop";
+        "text/html" = browser;
+        "x-scheme-handler/http" = browser;
+        "x-scheme-handler/https" = browser;
+        "x-scheme-handler/about" = browser;
+        "x-scheme-handler/unknown" = browser;
         "image/jpeg" = "sxiv.desktop";
         "image/png" = "sxiv.desktop";
         "image/gif" = "sxiv.desktop";
