@@ -287,6 +287,7 @@ in
     gurk-rs
     qpwgraph
     manim
+    pika-backup
   ];
   
   fonts.packages = with pkgs; [
