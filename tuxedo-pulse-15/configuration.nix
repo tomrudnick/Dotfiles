@@ -12,6 +12,7 @@
       ./hardware-configuration.nix
       ../default.nix
       ../modules/cleanup.nix
+      ../modules/usb-wakeup-disable.nix
     ];
 
   networking.hostName = "nixos-tux-tom"; # Define your hostname.
