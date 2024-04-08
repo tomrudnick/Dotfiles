@@ -24,4 +24,22 @@
   ];
 
   services.xserver.videoDrivers = ["amdgpu"];
+
+  hardware.bluetooth.settings = {
+    General = {
+      Disable = "Headset";
+    };
+  };
+
+  hardware.logitech.wireless.enable = true;
+  hardware.logitech.wireless.enableGraphical = true;
+  
+  hardware.usb.wakeupDisabled = [
+   {
+     # Logitech wireless mouse receiver
+     vendor = "046d";
+     product = "c539";
+   }
+  ];
+
 }
