@@ -19,6 +19,7 @@
                 inherit system;
                 modules = [
                     ./desktop-pc/configuration.nix
+                    home-manager.nixosModules.default
                 ];
             };
         };
@@ -28,14 +29,8 @@
                 inherit system;
                 modules = [
                     ./tuxedo-pulse-15/configuration.nix
+                    home-manager.nixosModules.default
                 ];
-            };
-        };
-
-        homeConfigurations = {
-            tom = home-manager.lib.homeManagerConfiguration {
-                inherit pkgs;
-                modules = [ ./home.nix ];
             };
         };
     };

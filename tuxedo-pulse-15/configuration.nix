@@ -43,4 +43,10 @@
    }
   ];
 
+  home-manager = {
+    users = {
+      "tom" = import ./home.nix;
+    };
+  };
+
 }
