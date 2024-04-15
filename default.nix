@@ -198,6 +198,11 @@ in
         '';
       });
     })
+    (self: super: {
+      rstudioWrapper = super.rstudioWrapper.override {
+        packages = with self.rPackages; [ tidyverse ];
+      };
+    })
   ];
 
   nixpkgs.config.chromium.enableWideVine = true; 
@@ -288,6 +293,7 @@ in
     qpwgraph
     manim
     pika-backup
+    rstudioWrapper
   ];
   
   fonts.packages = with pkgs; [
