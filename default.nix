@@ -44,7 +44,7 @@ in
   };
 
 
-
+  services.displayManager.defaultSession = "none+i3"; #default is lightdm
   # Configure keymap in X11
   services.xserver = {
     enable = true;
@@ -200,7 +200,7 @@ in
     })
     (self: super: {
       rstudioWrapper = super.rstudioWrapper.override {
-        packages = with self.rPackages; [ tidyverse ];
+        packages = with self.rPackages; [ tidyverse learnr remotes ];
       };
     })
   ];
@@ -294,7 +294,10 @@ in
     manim
     pika-backup
     rstudioWrapper
+    tor-browser-bundle-bin
+    nh
   ];
+
   
   fonts.packages = with pkgs; [
     nerdfonts
