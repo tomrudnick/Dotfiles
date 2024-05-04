@@ -44,7 +44,7 @@ in
   };
 
 
-  services.displayManager.defaultSession = "none+i3"; #default is lightdm
+  #services.displayManager.defaultSession = "none+i3"; #default is lightdm
   # Configure keymap in X11
   services.xserver = {
     enable = true;
