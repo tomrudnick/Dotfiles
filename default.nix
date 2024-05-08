@@ -296,6 +296,8 @@ in
     rstudioWrapper
     tor-browser-bundle-bin
     nh
+    lua-language-server
+    ripgrep
   ];
 
   
