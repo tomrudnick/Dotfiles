@@ -289,7 +289,6 @@ in
     localsend
     #geogebra6
     geogebra
-    gurk-rs
     qpwgraph
     manim
     pika-backup
@@ -297,6 +296,8 @@ in
     tor-browser-bundle-bin
     nh
     lua-language-server
+    stylua
+    nixd
     ripgrep
   ];
 

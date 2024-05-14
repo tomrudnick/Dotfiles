@@ -42,11 +42,4 @@
      product = "c539";
    }
   ];
-
-  home-manager = {
-    users = {
-      "tom" = import ./home.nix;
-    };
-  };
-
 }

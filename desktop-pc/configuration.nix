@@ -24,9 +24,4 @@
    package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
 
-  home-manager = {
-    users = {
-      "tom" = import ./home.nix;
-    };
-  };
 }
