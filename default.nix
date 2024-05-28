@@ -4,6 +4,7 @@
 
 { config, pkgs, ... }:
 let
+  rpkgs = with pkgs.rPackages; [ tidyverse learnr remotes nycflights13 ];
   dmenuExtended = (import ./pkgs/dmenu_extended.nix { inherit (pkgs) lib python3Packages; });
 in
 {
@@ -200,7 +201,10 @@ in
     })
     (self: super: {
       rstudioWrapper = super.rstudioWrapper.override {
-        packages = with self.rPackages; [ tidyverse learnr remotes ];
+        packages = rpkgs;
+      };
+      rWrapper = super.rWrapper.override {
+        packages = rpkgs;
       };
     })
   ];
@@ -223,6 +227,7 @@ in
     firefox
     kitty
     sxiv #replacement for feh
+    zathura
     networkmanagerapplet
     picom
     nitrogen
@@ -292,13 +297,19 @@ in
     qpwgraph
     manim
     pika-backup
+    rWrapper
     rstudioWrapper
     tor-browser-bundle-bin
     nh
     lua-language-server
     stylua
+    alejandra
     nixd
+    ltex-ls
+    nodePackages.bash-language-server
+    texlab
     ripgrep
+    xclip
   ];
 
   

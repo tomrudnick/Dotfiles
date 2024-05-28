@@ -6,7 +6,7 @@ sl | lolcat &
 SL_PID=$!
 
 # Start your second command in the background
-play "${SCRIPT_DIR}/thomas_tank_engine.mp3" > /dev/null 2>&1 &
+play --volume 0.01 "${SCRIPT_DIR}/thomas_tank_engine.mp3" > /dev/null 2>&1 &
 MUSIC_PID=$!
 
 # Wait for sl to finish
