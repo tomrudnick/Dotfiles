@@ -1,16 +1,16 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ config, pkgs, ... }:
-let
-  rpkgs = with pkgs.rPackages; [ tidyverse learnr remotes nycflights13 ];
-  dmenuExtended = (import ./pkgs/dmenu_extended.nix { inherit (pkgs) lib python3Packages; });
-in
 {
+  config,
+  pkgs,
+  ...
+}: let
+  rpkgs = with pkgs.rPackages; [tidyverse learnr remotes nycflights13 languageserver ];
+  dmenuExtended = import ./pkgs/dmenu_extended.nix {inherit (pkgs) lib python3Packages;};
+in {
+  boot.supportedFilesystems = ["ntfs"];
 
-  boot.supportedFilesystems = [ "ntfs" ];
- 
   # Bootloader.
   boot.loader.systemd-boot.enable = false;
   boot.loader.grub.enable = true;
@@ -19,7 +19,7 @@ in
   boot.loader.grub.efiSupport = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  environment.shells = with pkgs; [ zsh bash ];
+  environment.shells = with pkgs; [zsh bash];
   users.defaultUserShell = pkgs.zsh;
   programs.zsh.enable = true;
 
@@ -43,7 +43,6 @@ in
     LC_TELEPHONE = "de_DE.UTF-8";
     LC_TIME = "de_DE.UTF-8";
   };
-
 
   #services.displayManager.defaultSession = "none+i3"; #default is lightdm
   # Configure keymap in X11
@@ -83,7 +82,7 @@ in
 
   programs.java = {
     enable = true;
-  };  
+  };
 
   services = {
     dbus.enable = true;
@@ -94,23 +93,23 @@ in
 
   xdg.portal.enable = true;
   xdg.portal.config = {
-    common = { 
+    common = {
       default = [
         "gtk"
       ];
     };
   };
-  
+
   programs.dconf.enable = true; #store settings from gtk3 applications like size of file selection dialogs
-  
-  security.polkit.enable = true;  
+
+  security.polkit.enable = true;
 
   systemd = {
     user.services.polkit-gnome-authentication-agent-1 = {
       description = "polkit-gnome-authentication-agent-1";
-      wantedBy = [ "graphical-session.target" ];
-      wants = [ "graphical-session.target" ];
-      after = [ "graphical-session.target" ];
+      wantedBy = ["graphical-session.target"];
+      wants = ["graphical-session.target"];
+      after = ["graphical-session.target"];
       serviceConfig = {
         Type = "simple";
         ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
@@ -123,16 +122,16 @@ in
       description = "Update dmenu-extended cache";
       serviceConfig = {
         Type = "oneshot";
-        ExecStart = "${dmenuExtended}/bin/dmenu_extended_cache_build"; 
+        ExecStart = "${dmenuExtended}/bin/dmenu_extended_cache_build";
         Environment = "PATH=/run/current-system/sw/bin";
       };
-      wantedBy = [ "multi-user.target" ];
+      wantedBy = ["multi-user.target"];
     };
     user.timers.dmenuExtendedUpdateDb = {
       description = "Run dmenu-extended update db service every 5 minutes"; # Adjust the interval as necessary
       timerConfig.OnCalendar = "*:0/5";
-      wantedBy = [ "timers.target" ];
-      partOf = [ "dmenuExtendedUpdateDb.service" ];
+      wantedBy = ["timers.target"];
+      partOf = ["dmenuExtendedUpdateDb.service"];
     };
   };
 
@@ -141,7 +140,7 @@ in
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
-  services.printing.drivers = [ pkgs.gutenprint pkgs.gutenprintBin pkgs.epson-escpr ];
+  services.printing.drivers = [pkgs.gutenprint pkgs.gutenprintBin pkgs.epson-escpr];
 
   services.avahi = {
     enable = true;
@@ -166,7 +165,6 @@ in
     #media-session.enable = true;
   };
 
-
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
@@ -174,12 +172,12 @@ in
   users.users.tom = {
     isNormalUser = true;
     description = "Tom Rudnick";
-    extraGroups = [ "networkmanager" "wheel" "dialout" "audio" ];
+    extraGroups = ["networkmanager" "wheel" "dialout" "audio"];
   };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
-  
+
   nixpkgs.config.permittedInsecurePackages = [
     "mailspring-1.12.0"
   ];
@@ -206,11 +204,14 @@ in
       rWrapper = super.rWrapper.override {
         packages = rpkgs;
       };
+      quartoWrapper = super.quarto.override {
+        extraRPackages = rpkgs; 
+      };
     })
   ];
 
-  nixpkgs.config.chromium.enableWideVine = true; 
-  
+  nixpkgs.config.chromium.enableWideVine = true;
+
   environment.systemPackages = with pkgs; [
     gnumake
     gcc
@@ -245,7 +246,7 @@ in
     evince
     shared-mime-info
     lxmenu-data
-    (python3.withPackages(ps: with ps; [ pandas requests dbus-python numpy pip ]))
+    (python3.withPackages (ps: with ps; [pandas requests dbus-python numpy pip]))
     jetbrains.idea-ultimate
     jetbrains.rust-rover
     texliveFull
@@ -264,7 +265,7 @@ in
     fzf
     neofetch
     ranger
-    (import ./pkgs/dmenu_extended.nix { inherit (pkgs) lib python3Packages; })
+    (import ./pkgs/dmenu_extended.nix {inherit (pkgs) lib python3Packages;})
     flameshot #best screenshot tool
     teamspeak_client
     neovim
@@ -299,10 +300,12 @@ in
     pika-backup
     rWrapper
     rstudioWrapper
+    quartoWrapper
     tor-browser-bundle-bin
     nh
     lua-language-server
     stylua
+    marksman
     alejandra
     nixd
     ltex-ls
@@ -312,11 +315,10 @@ in
     xclip
   ];
 
-  
   fonts.packages = with pkgs; [
     nerdfonts
     font-awesome
-    siji 
+    siji
   ];
 
   hardware.opengl = {
@@ -328,7 +330,6 @@ in
     #];
   };
 
-  
   virtualisation.vmware.host = {
     enable = true;
   };
@@ -337,15 +338,24 @@ in
   networking = {
     firewall = {
       enable = true;
-      allowedTCPPorts = [ 80 443 53317 ];
+      allowedTCPPorts = [80 443 53317];
       allowedUDPPortRanges = [
-        { from = 4000; to = 4007; }
-        { from = 53315; to = 53318; }
-        { from = 8000; to = 8010; }
+        {
+          from = 4000;
+          to = 4007;
+        }
+        {
+          from = 53315;
+          to = 53318;
+        }
+        {
+          from = 8000;
+          to = 8010;
+        }
       ];
     };
   };
-    
+
   system.stateVersion = "23.11"; # Don't change
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = ["nix-command" "flakes"];
 }
