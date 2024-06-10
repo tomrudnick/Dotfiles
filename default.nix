@@ -6,7 +6,7 @@
   pkgs,
   ...
 }: let
-  rpkgs = with pkgs.rPackages; [tidyverse learnr remotes nycflights13 languageserver ];
+  rpkgs = with pkgs.rPackages; [tidyverse learnr remotes nycflights13 languageserver];
   dmenuExtended = import ./pkgs/dmenu_extended.nix {inherit (pkgs) lib python3Packages;};
 in {
   boot.supportedFilesystems = ["ntfs"];
@@ -172,7 +172,7 @@ in {
   users.users.tom = {
     isNormalUser = true;
     description = "Tom Rudnick";
-    extraGroups = ["networkmanager" "wheel" "dialout" "audio"];
+    extraGroups = ["networkmanager" "wheel" "dialout" "audio" "docker"];
   };
 
   # Allow unfree packages
@@ -205,7 +205,7 @@ in {
         packages = rpkgs;
       };
       quartoWrapper = super.quarto.override {
-        extraRPackages = rpkgs; 
+        extraRPackages = rpkgs;
       };
     })
   ];
@@ -247,7 +247,10 @@ in {
     shared-mime-info
     lxmenu-data
     (python3.withPackages (ps: with ps; [pandas requests dbus-python numpy pip]))
+    #(pkgs.jetbrains.plugins.addPlugins pkgs.jetbrains.idea-ultimate ["github-copilot" "ideavim"])
+    #(pkgs.jetbrains.plugins.addPlugins pkgs.jetbrains.clion ["github-copilot" "ideavim"])
     jetbrains.idea-ultimate
+    github-copilot-intellij-agent #this is rather a hotfix since I symlink from the /run/current-system to intellij
     jetbrains.rust-rover
     texliveFull
     libreoffice
@@ -313,6 +316,10 @@ in {
     texlab
     ripgrep
     xclip
+    postman
+    glibc
+    patchelf
+    grpc-tools
   ];
 
   fonts.packages = with pkgs; [
@@ -330,9 +337,11 @@ in {
     #];
   };
 
-  virtualisation.vmware.host = {
-    enable = true;
-  };
+  #virtualisation.vmware.host = {
+  #  enable = true;
+  #};
+
+  virtualisation.docker.enable = true;
 
   #this is neccessary cause of localsend
   networking = {
