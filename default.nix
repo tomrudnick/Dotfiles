@@ -320,6 +320,8 @@ in {
     glibc
     patchelf
     grpc-tools
+    github-desktop
+    ngrok
   ];
 
   fonts.packages = with pkgs; [
@@ -347,7 +349,7 @@ in {
   networking = {
     firewall = {
       enable = true;
-      allowedTCPPorts = [80 443 53317];
+      allowedTCPPorts = [80 443 53317 8080];
       allowedUDPPortRanges = [
         {
           from = 4000;
