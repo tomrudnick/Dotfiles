@@ -6,7 +6,6 @@
   pkgs,
   ...
 }: let
-  rpkgs = with pkgs.rPackages; [tidyverse learnr remotes nycflights13 languageserver];
   dmenuExtended = import ./pkgs/dmenu_extended.nix {inherit (pkgs) lib python3Packages;};
 in {
   boot.supportedFilesystems = ["ntfs"];
@@ -44,6 +43,13 @@ in {
     LC_TIME = "de_DE.UTF-8";
   };
 
+  services.libinput = {
+    enable = true;
+    mouse = {
+      middleEmulation = false; #disable left + right click = middle click (gaming)
+    };
+  };
+
   #services.displayManager.defaultSession = "none+i3"; #default is lightdm
   # Configure keymap in X11
   services.xserver = {
@@ -57,8 +63,6 @@ in {
       xterm.enable = false;
     };
 
-    displayManager.defaultSession = "none+i3"; #default is lightdm
-
     windowManager.i3 = {
       enable = true;
       package = pkgs.i3-gaps;
@@ -67,15 +71,12 @@ in {
         i3lock
       ];
     };
-
-    libinput = {
-      enable = true;
-      mouse = {
-        middleEmulation = false; #disable left + right click = middle click (gaming)
-      };
-    };
   };
 
+  programs.hyprland = {
+    enable = true;
+    xwayland.enable = true;
+  };
   programs.steam = {
     enable = true;
   };
@@ -165,6 +166,14 @@ in {
     #media-session.enable = true;
   };
 
+  services.ollama = {
+    enable = true;
+    acceleration = "cuda";
+  };
+
+
+  services.usbmuxd.enable = true;
+
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
@@ -196,17 +205,6 @@ in {
           wrapProgram $out/bin/mailspring --add-flags "--password-store=gnome-libsecret" #otherwise passwords can't be stored
         '';
       });
-    })
-    (self: super: {
-      rstudioWrapper = super.rstudioWrapper.override {
-        packages = rpkgs;
-      };
-      rWrapper = super.rWrapper.override {
-        packages = rpkgs;
-      };
-      quartoWrapper = super.quarto.override {
-        extraRPackages = rpkgs;
-      };
     })
   ];
 
@@ -247,11 +245,12 @@ in {
     shared-mime-info
     lxmenu-data
     (python3.withPackages (ps: with ps; [pandas requests dbus-python numpy pip]))
-    #(pkgs.jetbrains.plugins.addPlugins pkgs.jetbrains.idea-ultimate ["github-copilot" "ideavim"])
-    #(pkgs.jetbrains.plugins.addPlugins pkgs.jetbrains.clion ["github-copilot" "ideavim"])
     jetbrains.idea-ultimate
     github-copilot-intellij-agent #this is rather a hotfix since I symlink from the /run/current-system to intellij
     jetbrains.rust-rover
+    jetbrains.pycharm-professional
+    jetbrains.rider
+    jetbrains.webstorm
     texliveFull
     libreoffice
     hunspell
@@ -281,7 +280,6 @@ in {
     sl
     sox
     lolcat
-    gpu-screen-recorder-gtk
     gpu-screen-recorder
     vlc
     gimp
@@ -298,12 +296,7 @@ in {
     localsend
     #geogebra6
     geogebra
-    qpwgraph
     manim
-    pika-backup
-    rWrapper
-    rstudioWrapper
-    quartoWrapper
     tor-browser-bundle-bin
     nh
     lua-language-server
@@ -322,6 +315,12 @@ in {
     grpc-tools
     github-desktop
     ngrok
+    nodejs
+    imagemagickBig
+    uv
+    typst-lsp
+    typst
+    nautilus
   ];
 
   fonts.packages = with pkgs; [
@@ -330,18 +329,10 @@ in {
     siji
   ];
 
-  hardware.opengl = {
+  hardware.graphics = {
     enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
-    #extraPackages = with pkgs; [
-    #  vaapiVdpau #enables video acceleration
-    #];
+    enable32Bit = true;
   };
-
-  #virtualisation.vmware.host = {
-  #  enable = true;
-  #};
 
   virtualisation.docker.enable = true;
 

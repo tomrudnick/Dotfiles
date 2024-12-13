@@ -83,11 +83,11 @@ let browser = "chromium-browser.desktop"; in
     #   org.gradle.console=verbose
     #   org.gradle.daemon.idletimeout=3600000
     # '';
-    ".config/kitty/kitty.conf".source = ./kitty.conf;
-    ".config/kitty/current-theme.conf".source = ./kitty-theme.conf;
-    ".config/dmenu-extended/config/dmenuExtended_preferences.txt".source = ./dmenuExtended.conf;
-    ".config/onedrive/config".source = ./onedrive.conf;
-    ".config/picom.conf".source = ./picom.conf;
+    ".config/kitty/kitty.conf".source = ./config/kitty.conf;
+    ".config/kitty/current-theme.conf".source = ./config/kitty-theme.conf;
+    ".config/dmenu-extended/config/dmenuExtended_preferences.txt".source = ./config/dmenuExtended.conf;
+    ".config/onedrive/config".source = ./config/onedrive.conf;
+    ".config/picom.conf".source = ./config/picom.conf;
   };
 
   # Home Manager can also manage your environment variables through
