@@ -93,6 +93,8 @@ in
       };
     };
 
+    displayManager.defaultSession = "none+i3"; # i3 as default
+
     # Audio: PipeWire
     pipewire = {
       enable = true;
@@ -136,10 +138,6 @@ in
   ####################
   # Programs
   ####################
-  programs.hyprland = {
-    enable = true;
-    xwayland.enable = true;
-  };
   programs.steam.enable = true;
   programs.java.enable = true;
   programs.dconf.enable = true; # Store GTK3 application settings
@@ -228,7 +226,74 @@ in
   # Fonts
   ####################
   fonts.packages = with pkgs; [
-    nerdfonts
+    nerd-fonts.noto
+    nerd-fonts.hack
+    nerd-fonts.arimo
+    nerd-fonts.tinos
+    nerd-fonts.lilex
+    nerd-fonts._3270
+    nerd-fonts.mplus
+    nerd-fonts.agave
+    nerd-fonts.hurmit
+    nerd-fonts.lekton
+    nerd-fonts.ubuntu
+    nerd-fonts.monoid
+    nerd-fonts.go-mono
+    nerd-fonts.cousine
+    nerd-fonts.monofur
+    nerd-fonts.hasklug
+    nerd-fonts.iosevka
+    nerd-fonts.profont
+    nerd-fonts._0xproto
+    nerd-fonts.mononoki
+    nerd-fonts.overpass
+    nerd-fonts.zed-mono
+    nerd-fonts.gohufont
+    nerd-fonts.d2coding
+    nerd-fonts.meslo-lg
+    nerd-fonts.monaspace
+    nerd-fonts.anonymice
+    nerd-fonts.fira-mono
+    nerd-fonts.blex-mono
+    nerd-fonts.fira-code
+    nerd-fonts.geist-mono
+    nerd-fonts.heavy-data
+    nerd-fonts.space-mono
+    nerd-fonts.liberation
+    nerd-fonts.im-writing
+    nerd-fonts.envy-code-r
+    nerd-fonts.roboto-mono
+    nerd-fonts.intone-mono
+    nerd-fonts.ubuntu-sans
+    nerd-fonts.victor-mono
+    nerd-fonts.ubuntu-mono
+    nerd-fonts.inconsolata
+    nerd-fonts.commit-mono
+    nerd-fonts.symbols-only
+    nerd-fonts.martian-mono
+    nerd-fonts.iosevka-term
+    nerd-fonts.open-dyslexic
+    nerd-fonts.terminess-ttf
+    nerd-fonts.inconsolata-go
+    nerd-fonts.caskaydia-cove
+    nerd-fonts.sauce-code-pro
+    nerd-fonts.departure-mono
+    nerd-fonts.caskaydia-mono
+    nerd-fonts.recursive-mono
+    nerd-fonts.code-new-roman
+    nerd-fonts.jetbrains-mono
+    nerd-fonts.inconsolata-lgc
+    nerd-fonts.shure-tech-mono
+    nerd-fonts.proggy-clean-tt
+    nerd-fonts.droid-sans-mono
+    nerd-fonts.daddy-time-mono
+    nerd-fonts.dejavu-sans-mono
+    nerd-fonts.bigblue-terminal
+    nerd-fonts.iosevka-term-slab
+    nerd-fonts.comic-shanns-mono
+    nerd-fonts.aurulent-sans-mono
+    nerd-fonts.fantasque-sans-mono
+    nerd-fonts.bitstream-vera-sans-mono
     font-awesome
     siji
   ];
